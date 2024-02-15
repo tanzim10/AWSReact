@@ -24,16 +24,7 @@ function App() {
         <AppLayout>
           <Routes>
             <Route path="/" element={<Home />} />
-
-            <Route path="posts" element={<Posts />} />
-            <Route path="/posts/:id" element={<PostDetails />}/>
-            <Route path ="/users" element={<Users />} />
-            <Route path="users/:id" element={<UserDetails />} />
-            <Route path="/filteruser" element={<FilterUser />} />
-
             <Route path="about" element={<About />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="service" element={<Service />} />
             <Route path="aws" element={<AWS />} />
             <Route path ="create_aws" element={<CreateAWS />} />
             <Route path="update_aws/:EMPNO" element={<UpdateAWS />} />
