@@ -1,14 +1,9 @@
-import React from 'react';
+import React from "react";
+import Header from "../component/header";
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../lib/hooks/useAuth';
 
+function AuthLayout({children}) {
 
-function Header() {
-  const { logout } = useAuth();
-  const handleLogout = () => {
-    logout();
-  }
-  // Inline CSS for basic styling
   const navStyle = {
     backgroundColor: '#f0f0f0', // Light grey background
     padding: '10px 0', // Some padding around the navbar
@@ -35,21 +30,18 @@ function Header() {
     padding: '14px 16px', // Padding around links
     textDecoration: 'none', // Remove underline from links
   };  
-
   return (
-    <nav style={navStyle}>
+    <div>
+      <nav style={navStyle}>
       <ul style={ulStyle}>
-        <li style={liStyle}><Link to="home" style={linkStyle}>Home</Link></li>
-        <li style={liStyle}><Link to="/aws" style={linkStyle}>AWS</Link></li>
-        <li style={liStyle}><Link to="/create_aws" style={linkStyle}>Create API Data</Link></li>
-        <li style={liStyle}><button style={linkStyle} onClick={handleLogout}>Logout</button></li>
-        {/* <li style={liStyle}><Link to="/update_aws" style={linkStyle}>Update API Data</Link></li>
-        <li style={liStyle}><Link to="/delete_aws" style={linkStyle}>Delete API Data</Link></li> */}
+      <li style={liStyle}><Link to="/*" style={linkStyle}>Login</Link></li>
+      <li style={liStyle}><Link to="/signup" style={linkStyle}>Signup</Link></li>
       </ul>
     </nav>
+      <br/>
+      {children}
+    </div>
   );
 }
 
-export default Header;
-
-
+export default AuthLayout;

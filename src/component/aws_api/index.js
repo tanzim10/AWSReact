@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import actions from "../../redux/actions";
+import { useDispatch } from "react-redux";
 
 function AWS() {
   const [aws, setAws] = useState([]);
   const baseUrl = process.env.REACT_APP_API_BASE_URL;
+  const dispatch = useDispatch();
 
   const fetchAws = () => {
     fetch(`${baseUrl}/all_emp`)
       .then((response) => response.json())
       .then((json) => {
         setAws(json);
-        console.log(json); 
+        console.log(json);
+        dispatch(actions.employee.getEmployee(json)); 
       });
   };
 

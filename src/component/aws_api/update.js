@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const UpdateAWS = () => {
-    const [data, setData] = useState({
-        LastName: "",
-        DOB: "",
-        HiredDate: "",
-        Salary: "",
-        Bonus: "",
-        WorkDept: "",
-        PhoneNo: "", 
-        Job: "", 
-        EDLevel: "", 
-        Sex: "", 
-        Email: ""
-    });
+    
+    const { employees } = useSelector((state) => state.employee);
+    console.log(employees);
+
 
     const baseUrl = process.env.REACT_APP_API_BASE_URL;
     const { EMPNO } = useParams(); // Assuming EMPNO is a string
+    const employeeData =employees && employees.find((item) => item.EMPNO === EMPNO);
+    console.log(employeeData);
+    const [data, setData] = useState({
+        LastName: employeeData.LastName,
+        DOB: employeeData.DOB,
+        HiredDate: employeeData.HiredDate,
+        Salary: employeeData.Salary,
+        Bonus: employeeData.Bonus,
+        WorkDept: employeeData.WorkDept,
+        PhoneNo: employeeData.PhoneNo, 
+        Job: employeeData.Job, 
+        EDLevel: employeeData.EDLevel, 
+        Sex: employeeData, 
+        Email: employeeData.Email
+    });
     const empnoInt = parseInt(EMPNO, 10); // Convert to integer with base 10
 
     const handleSubmit = (e) => {
@@ -70,10 +77,6 @@ const UpdateAWS = () => {
                 });
         }
     }, [EMPNO, baseUrl]); 
-    
-
-
-    
 
     const submitData = (filteredData) => {
         fetch(`${baseUrl}/update_emp/${empnoInt}`, {

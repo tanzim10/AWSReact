@@ -1,39 +1,30 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Posts from "./component/post/index";
-import PostDetails from "./component/post/view";
-import Home from "./component/home";
-import About from "./component/about";
-import Contact from "./component/contact";
-import Service from "./component/service";
-import AppLayout from "./layout/application";
-import Users from "./component/users";
-import UserDetails from "./component/users/view";
-import AWS from "./component/aws_api/index";
-import CreateAWS from "./component/aws_api/create";
-import UpdateAWS from "./component/aws_api/update";
-import DeleteItemAWS from "./component/aws_api/delete";
-import FilterUser from "./component/users/filteruser";
+import React, {Suspense, useEffect} from 'react';
+import { useSelector } from "react-redux";
 
+const Application = React.lazy(() => import('./component/application'));
+const Authentication = React.lazy(() => import('./component/auth'));
 
 
 function App() {
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
+  const isAuthenticated = user && user.token ? true : false;
+  useEffect(() => {
+    console.log('isAuthenticated', isAuthenticated);
+
+  },[isAuthenticated])
   return (
-    <>
-      <BrowserRouter>
-        <AppLayout>
+      <Suspense fallback={<div>Loading...</div>}>
+        <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="aws" element={<AWS />} />
-            <Route path ="create_aws" element={<CreateAWS />} />
-            <Route path="update_aws/:EMPNO" element={<UpdateAWS />} />
-            <Route path="delete_aws/:EMPNO" element={<DeleteItemAWS />} />
+            <Route path="/*" element={!isAuthenticated? <Authentication />: <Application />} />
           </Routes>
-        </AppLayout>
-      </BrowserRouter>
-    </>
+        </BrowserRouter>
+      </Suspense>
   );
+
 }
 
 export default App;
