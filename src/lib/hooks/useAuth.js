@@ -20,7 +20,7 @@ export const useAuth = () => {
                 password,
             });
 
-            if (response.data && response.data.token && response.data.user) {
+            if (response && response.data && response.data.token && response.data.user) {
                 const { token, user } = response.data;
                 dispatch(actions.auth.login({ user, token }));
                 localStorage.setItem('token', token);
@@ -46,7 +46,7 @@ export const useAuth = () => {
     const handleRegister = async (data) => {
         console.log("Register Data", data);
         try {
-            const response = await axios.post(`${baseUrl}signup`, {'user': data});
+            const response = await axios.post(`${baseUrl}/signup`, {'user': data});
             console.log("Register Response", response);
 
 
